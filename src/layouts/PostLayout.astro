@@ -1,0 +1,156 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import authors from "../data/authors.json";
+
+const { frontmatter } = Astro.props;
+const author = authors.find((item) => item.id === frontmatter.authorId);
+const fallbackAvatar =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23e6e0d9'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%236d6156' font-size='64' font-family='Arial, sans-serif'%3E%3F%3C/text%3E%3C/svg%3E";
+---
+<BaseLayout title={frontmatter.title} description={frontmatter.excerpt}>
+  <article class="post">
+    <header class="post-header">
+      <p class="post-meta">{frontmatter.date}</p>
+      <h1>{frontmatter.title}</h1>
+      <p class="post-excerpt">{frontmatter.excerpt}</p>
+      <div class="post-cover">
+        <img
+          src={frontmatter.coverImage}
+          alt={`Imagem de capa para ${frontmatter.title}`}
+          loading="lazy"
+        />
+      </div>
+    </header>
+    <section class="post-content">
+      <slot />
+    </section>
+    <section class="author-card">
+      <div class="author-image">
+        <img
+          src={author?.photo ?? fallbackAvatar}
+          alt={author ? `Foto de ${author.name}` : "Foto do autor"}
+          loading="lazy"
+          onerror={`this.onerror=null;this.src='${fallbackAvatar}';`}
+        />
+      </div>
+      <div class="author-details">
+        <p class="author-label">Sobre o autor</p>
+        <h3>{author?.name ?? "Autor"}</h3>
+        <p class="author-role">{author?.role ?? ""}</p>
+        <p class="author-bio">{author?.bio ?? ""}</p>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-header {
+    text-align: left;
+    margin-bottom: 2.5rem;
+  }
+
+  .post-meta {
+    color: #6d6156;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-header h1 {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    margin: 0 0 1rem;
+  }
+
+  .post-excerpt {
+    font-size: 1.1rem;
+    color: #4a3f35;
+    margin-bottom: 1.5rem;
+  }
+
+  .post-cover {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(31, 31, 31, 0.12);
+  }
+
+  .post-cover img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .post-content {
+    font-size: 1.05rem;
+    color: #2f261d;
+  }
+
+  .post-content p {
+    margin: 1.5rem 0;
+  }
+
+  .author-card {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    padding: 1.8rem;
+    border-radius: 20px;
+    background: #ffffff;
+    border: 1px solid #e6e0d9;
+    box-shadow: 0 18px 30px rgba(31, 31, 31, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .author-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 40px rgba(31, 31, 31, 0.12);
+  }
+
+  .author-image {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f0ebe5;
+  }
+
+  .author-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .author-label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+    color: #8a7d70;
+    margin: 0 0 0.4rem;
+  }
+
+  .author-details h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.2rem;
+  }
+
+  .author-role {
+    margin: 0 0 0.75rem;
+    color: #6d6156;
+  }
+
+  .author-bio {
+    margin: 0;
+    color: #4a3f35;
+  }
+
+  @media (max-width: 640px) {
+    .author-card {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .author-image {
+      margin: 0 auto;
+    }
+  }
+</style>
