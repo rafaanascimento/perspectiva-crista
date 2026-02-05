@@ -8,6 +8,12 @@ const sortedPosts = posts.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?? "Autor";
+const formatDate = (value) =>
+  new Date(value).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 ---
 <BaseLayout>
   <section class="hero">
@@ -20,26 +26,23 @@ const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?
   </section>
 
   <section class="post-list">
-    {sortedPosts.map((post) => (
-      <article class="post-card">
-        <a href={`/posts/${post.slug}/`} class="post-card__image">
-          <img
-            src={post.data.coverImage}
-            alt={`Imagem de capa para ${post.data.title}`}
-            loading="lazy"
-          />
-        </a>
-        <div class="post-card__body">
+    <h2 class="section-title">Últimos artigos</h2>
+    <div class="post-list__grid">
+      {sortedPosts.map((post) => (
+        <article class="post-card">
           <p class="post-card__meta">
-            {post.data.date} · {getAuthorName(post.data.authorId)}
+            {formatDate(post.data.date)} · {getAuthorName(post.data.authorId)}
           </p>
-          <h2>
+          <h3>
             <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
-          </h2>
-          <p>{post.data.excerpt}</p>
-        </div>
-      </article>
-    ))}
+          </h3>
+          <p class="post-card__excerpt">{post.data.excerpt}</p>
+          <a class="post-card__link" href={`/posts/${post.slug}/`}>
+            Ler artigo →
+          </a>
+        </article>
+      ))}
+    </div>
   </section>
 </BaseLayout>
 
@@ -72,54 +75,54 @@ const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?
     gap: 2rem;
   }
 
+  .section-title {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #8a7d70;
+    margin: 0;
+  }
+
+  .post-list__grid {
+    display: grid;
+    gap: 1.8rem;
+  }
+
   .post-card {
     background: #ffffff;
     border: 1px solid #e6e0d9;
     border-radius: 20px;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 0;
-    min-height: 240px;
-    box-shadow: 0 12px 24px rgba(31, 31, 31, 0.08);
-  }
-
-  .post-card__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .post-card__body {
     padding: 1.8rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    gap: 0.9rem;
+    box-shadow: 0 12px 24px rgba(31, 31, 31, 0.08);
   }
 
   .post-card__meta {
     color: #6d6156;
     font-size: 0.9rem;
-    margin-bottom: 0.75rem;
+    margin: 0;
   }
 
-  .post-card h2 {
-    margin: 0 0 0.75rem;
-    font-size: 1.5rem;
+  .post-card h3 {
+    margin: 0;
+    font-size: 1.4rem;
   }
 
-  .post-card p {
+  .post-card__excerpt {
     margin: 0;
     color: #4a3f35;
   }
 
-  @media (max-width: 760px) {
-    .post-card {
-      grid-template-columns: 1fr;
-    }
+  .post-card__link {
+    font-weight: 600;
+    color: #4a3f35;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
 
-    .post-card__image img {
-      height: 220px;
-    }
+  .post-card__link:hover {
+    text-decoration: underline;
   }
 </style>
