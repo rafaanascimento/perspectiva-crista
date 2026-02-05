@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import authors from "../data/authors.json";
+
+const posts = await getCollection("posts");
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?? "Autor";
+const formatDate = (value) =>
+  new Date(value).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+---
+<BaseLayout>
+  <section class="hero">
+    <p class="kicker">Editorial</p>
+    <h1>Perspectiva Cristã</h1>
+    <p class="subtitle">
+      Um espaço para leituras, fé e reflexão. Textos autorais com foco em propósito e
+      conteúdo profundo.
+    </p>
+  </section>
+
+  <section class="post-list">
+    <h2 class="section-title">Últimos artigos</h2>
+    <div class="post-list__grid">
+      {sortedPosts.map((post) => (
+        <article class="post-card">
+          <p class="post-card__meta">
+            {formatDate(post.data.date)} · {getAuthorName(post.data.authorId)}
+          </p>
+          <h3>
+            <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+          </h3>
+          <p class="post-card__excerpt">{post.data.excerpt}</p>
+          <a class="post-card__link" href={`/posts/${post.slug}/`}>
+            Ler artigo →
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    margin-bottom: 3rem;
+  }
+
+  .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    color: #8a7d70;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    margin: 0 0 1rem;
+  }
+
+  .subtitle {
+    max-width: 560px;
+    color: #4a3f35;
+    font-size: 1.1rem;
+  }
+
+  .post-list {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #8a7d70;
+    margin: 0;
+  }
+
+  .post-list__grid {
+    display: grid;
+    gap: 1.8rem;
+  }
+
+  .post-card {
+    background: #ffffff;
+    border: 1px solid #e6e0d9;
+    border-radius: 20px;
+    padding: 1.8rem;
+    display: grid;
+    gap: 0.9rem;
+    box-shadow: 0 12px 24px rgba(31, 31, 31, 0.08);
+  }
+
+  .post-card__meta {
+    color: #6d6156;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .post-card h3 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .post-card__excerpt {
+    margin: 0;
+    color: #4a3f35;
+  }
+
+  .post-card__link {
+    font-weight: 600;
+    color: #4a3f35;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .post-card__link:hover {
+    text-decoration: underline;
+  }
+</style>
