@@ -16,14 +16,7 @@ const formatDate = (value) =>
   });
 ---
 <BaseLayout>
-  <section class="hero">
-    <p class="kicker">Editorial</p>
-    <h1>Perspectiva Cristã</h1>
-    <p class="subtitle">
-      Um espaço para leituras, fé e reflexão. Textos autorais com foco em propósito e
-      conteúdo profundo.
-    </p>
-  </section>
+  <section class="hero" aria-hidden="true"></section>
 
   <section class="post-list">
     <h2 class="section-title">Últimos artigos</h2>
@@ -48,26 +41,21 @@ const formatDate = (value) =>
 
 <style>
   .hero {
-    margin-bottom: 3rem;
+    min-height: 58vh;
+    margin-bottom: 2.5rem;
+    border-radius: 20px;
+    background-image: url("/images/perspectiva_crista_hero_final_wide.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
-  .kicker {
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.75rem;
-    color: #8a7d70;
-    margin-bottom: 0.5rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.4rem, 4vw, 3.2rem);
-    margin: 0 0 1rem;
-  }
-
-  .subtitle {
-    max-width: 560px;
-    color: #4a3f35;
-    font-size: 1.1rem;
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 42vh;
+      margin-bottom: 2rem;
+      border-radius: 16px;
+    }
   }
 
   .post-list {
