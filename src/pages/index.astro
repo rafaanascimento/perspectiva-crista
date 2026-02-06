@@ -14,9 +14,13 @@ const formatDate = (value) =>
     month: "long",
     year: "numeric",
   });
+const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const heroImageUrl = `${baseUrl}images/perspectiva_crista_hero_final_wide.png`;
 ---
 <BaseLayout>
-  <section class="hero" aria-hidden="true"></section>
+  <section class="hero" style={`--hero-image: url("${heroImageUrl}")`} aria-hidden="true"></section>
 
   <section class="post-list">
     <h2 class="section-title">Últimos artigos</h2>
@@ -27,10 +31,10 @@ const formatDate = (value) =>
             {formatDate(post.data.date)} · {getAuthorName(post.data.authorId)}
           </p>
           <h3>
-            <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+            <a href={`${baseUrl}posts/${post.slug}/`}>{post.data.title}</a>
           </h3>
           <p class="post-card__excerpt">{post.data.excerpt}</p>
-          <a class="post-card__link" href={`/posts/${post.slug}/`}>
+          <a class="post-card__link" href={`${baseUrl}posts/${post.slug}/`}>
             Ler artigo →
           </a>
         </article>
@@ -44,7 +48,7 @@ const formatDate = (value) =>
     height: 58vh;
     min-height: 360px;
     margin-bottom: 2.5rem;
-    background-image: url("/images/perspectiva_crista_hero_final_wide.png");
+    background-image: var(--hero-image);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
