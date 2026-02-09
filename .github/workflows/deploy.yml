@@ -2,6 +2,11 @@ name: pages-build-deployment
 
 on:
   push:
+    branches:
+      - main
+      - codex/adjust-astro-links-for-github-pages
+      - adjust-typography-spacing-for-titles
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -59,6 +64,7 @@ jobs:
           path: ./dist
 
   deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
