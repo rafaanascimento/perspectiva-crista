@@ -34,6 +34,7 @@ const formatDate = (value) =>
             {formatDate(post.data.date)} · {getAuthorName(post.data.authorId)}
           </p>
           <h3>
+            {/* BASE_URL garante links de posts válidos no GitHub Pages */}
             <a href={`${import.meta.env.BASE_URL}posts/${post.slug}/`}>{post.data.title}</a>
           </h3>
           <p class="post-card__excerpt">{post.data.excerpt}</p>
