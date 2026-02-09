@@ -4,6 +4,8 @@ import authors from "../data/authors.json";
 
 const { frontmatter } = Astro.props;
 const author = authors.find((item) => item.id === frontmatter.authorId);
+const toBaseUrl = (path) =>
+  path?.startsWith("/") ? `${import.meta.env.BASE_URL}${path.slice(1)}` : path;
 const fallbackAvatar =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23e6e0d9'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%236d6156' font-size='64' font-family='Arial, sans-serif'%3E%3F%3C/text%3E%3C/svg%3E";
 ---
@@ -27,7 +29,7 @@ const fallbackAvatar =
     <section class="author-card">
       <div class="author-image">
         <img
-          src={author?.photo ?? fallbackAvatar}
+          src={toBaseUrl(author?.photo) ?? fallbackAvatar}
           alt={author ? `Foto de ${author.name}` : "Foto do autor"}
           loading="lazy"
           onerror={`this.onerror=null;this.src='${fallbackAvatar}';`}
