@@ -38,6 +38,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Validate merge markers
+        run: |
+          if rg -n "^(<<<<<<<|=======|>>>>>>>)" astro.config.mjs src; then
+            echo "Merge conflict markers found."
+            exit 1
+          fi
+
       - name: Build site
         run: npm run build
 
