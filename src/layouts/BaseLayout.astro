@@ -1,6 +1,5 @@
 ---
 const { title = "Perspectiva Cristã", description = "Reflexões, fé e propósito." } = Astro.props;
-const withBase = (path = "") => `${import.meta.env.BASE_URL}${path}`;
 ---
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -13,11 +12,9 @@ const withBase = (path = "") => `${import.meta.env.BASE_URL}${path}`;
   <body>
     <header class="site-header">
       <div class="container">
-        {/* BASE_URL mantém navegação correta em subpasta do GitHub Pages */}
-        <a class="logo" href={withBase()}>Perspectiva Cristã</a>
+        <a class="logo" href={import.meta.env.BASE_URL}>Perspectiva Cristã</a>
         <nav class="site-nav">
-          {/* BASE_URL evita redirecionar para a raiz do domínio */}
-          <a href={withBase()}>Início</a>
+          <a href={import.meta.env.BASE_URL}>Início</a>
         </nav>
       </div>
     </header>
