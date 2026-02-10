@@ -17,11 +17,11 @@ Criar uma base simples, sustentável e orientada a conteúdo para textos autorai
 - `src/content/posts`: artigos em Markdown com frontmatter obrigatório.
 - `src/data/authors.json`: cadastro de autores.
 - `src/assets/images`: imagens locais de posts (não incluídas no repositório).
-- `src/assets/authors`: fotos de autores (não incluídas no repositório).
+- `public/assets/authors`: fotos públicas de autores usadas no site.
 
 ## Observações sobre imagens e assets
 
-Este repositório não contém arquivos binários. Adicione imagens e fotos manualmente nos diretórios indicados e mantenha os padrões descritos nos arquivos `README.md` de cada pasta.
+As fotos de autores e imagens podem ser versionadas quando necessário para garantir consistência no deploy. Mantenha os padrões descritos nos arquivos `README.md` de cada pasta.
 
 ## Uso pessoal/editorial
 
