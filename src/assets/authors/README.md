@@ -1,10 +1,5 @@
-# Fotos de autores
+# Pasta legada (não usada em runtime)
 
-Armazene aqui as fotos dos autores cadastrados em `src/data/authors.json`.
+Esta pasta existe apenas como referência de organização.
 
-**Padrões recomendados**
-- Formato: `.jpg` ou `.webp`
-- Tamanho sugerido: 600x600px (quadrado)
-- Nome do arquivo: `{id}.jpg` (ex.: `rafael-nascimento.jpg`)
-
-> Este repositório não inclui fotos reais. Adicione-as manualmente quando necessário.
+Para exibir fotos no site, os arquivos devem ficar em `public/assets/authors` e serem referenciados em `src/data/authors.json` com caminhos públicos (ex.: `/assets/authors/rafael-nascimento.jpg`).
