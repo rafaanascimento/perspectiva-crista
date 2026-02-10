@@ -3,9 +3,9 @@ import BaseLayout from "./BaseLayout.astro";
 import authors from "../data/authors.json";
 
 const { frontmatter } = Astro.props;
-const author = authors.find((item) => item.id === frontmatter.authorId);
-const fallbackAvatar =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23e6e0d9'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%236d6156' font-size='64' font-family='Arial, sans-serif'%3E%3F%3C/text%3E%3C/svg%3E";
+const author =
+  authors.find((item) => item.id === frontmatter.authorId) ??
+  { name: "Autor", role: "", bio: "", avatar: "/authors/rafael.jpg" };
 ---
 <BaseLayout title={frontmatter.title} description={frontmatter.excerpt}>
   <article class="post">
@@ -27,17 +27,16 @@ const fallbackAvatar =
     <section class="author-card">
       <div class="author-image">
         <img
-          src={author?.avatar ?? fallbackAvatar}
-          alt={author ? `Foto de ${author.name}` : "Foto do autor"}
+          src={author.avatar}
+          alt={author.name}
           loading="lazy"
-          onerror={`this.onerror=null;this.src='${fallbackAvatar}';`}
         />
       </div>
       <div class="author-details">
         <p class="author-label">Sobre o autor</p>
-        <h3>{author?.name ?? "Autor"}</h3>
-        <p class="author-role">{author?.role ?? ""}</p>
-        <p class="author-bio">{author?.bio ?? ""}</p>
+        <h3>{author.name}</h3>
+        <p class="author-role">{author.role}</p>
+        <p class="author-bio">{author.bio}</p>
       </div>
     </section>
   </article>
