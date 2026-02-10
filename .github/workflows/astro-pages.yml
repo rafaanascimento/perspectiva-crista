@@ -1,11 +1,9 @@
-name: "fix: run pages build checks on integration branches"
+name: Deploy Astro to GitHub Pages
 
 on:
   push:
     branches:
       - main
-      - 'codex/**'
-      - 'feature/**'
   pull_request:
     branches:
       - main
