@@ -1,4 +1,4 @@
-name: fix: run pages build checks on integration branches
+name: "fix: run pages build checks on integration branches"
 
 on:
   push:
