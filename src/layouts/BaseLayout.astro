@@ -1,6 +1,5 @@
 ---
 const { title = "Perspectiva Cristã", description = "Reflexões, fé e propósito." } = Astro.props;
-const baseUrl = import.meta.env.BASE_URL;
 ---
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -13,9 +12,9 @@ const baseUrl = import.meta.env.BASE_URL;
   <body>
     <header class="site-header">
       <div class="container">
-        <a class="logo" href={baseUrl}>Perspectiva Cristã</a>
+        <a class="logo" href="/">Perspectiva Cristã</a>
         <nav class="site-nav">
-          <a href={baseUrl}>Início</a>
+          <a href="/">Início</a>
         </nav>
       </div>
     </header>

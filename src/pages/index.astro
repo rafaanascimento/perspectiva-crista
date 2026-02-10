@@ -14,8 +14,6 @@ const formatDate = (value) =>
     month: "long",
     year: "numeric",
   });
-const baseUrl = import.meta.env.BASE_URL;
-const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
 ---
 <BaseLayout>
   <section class="hero">
@@ -36,10 +34,10 @@ const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
             {formatDate(post.data.date)} · {getAuthorName(post.data.authorId)}
           </p>
           <h3>
-            <a href={withBase(`/posts/${post.slug}/`)}>{post.data.title}</a>
+            <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
           </h3>
           <p class="post-card__excerpt">{post.data.excerpt}</p>
-          <a class="post-card__link" href={withBase(`/posts/${post.slug}/`)}>
+          <a class="post-card__link" href={`/posts/${post.slug}/`}>
             Ler artigo →
           </a>
         </article>
