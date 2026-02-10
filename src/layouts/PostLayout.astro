@@ -31,7 +31,7 @@ const authorPhoto = author?.photo ?? fallbackAvatar;
           src={authorPhoto}
           alt={author ? `Foto de ${author.name}` : "Foto do autor"}
           loading="lazy"
-          onerror={`this.onerror=null;this.src='${fallbackAvatar}';`}
+          onerror={`this.onerror=null;this.src="${fallbackAvatar}";`}
         />
       </div>
       <div class="author-details">
