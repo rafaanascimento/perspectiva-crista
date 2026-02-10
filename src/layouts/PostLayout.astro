@@ -11,8 +11,11 @@ const fallbackAvatar = "/assets/authors/default-author.svg";
 
 const fallbackAvatar =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23e6e0d9'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%236d6156' font-size='64' font-family='Arial, sans-serif'%3E%3F%3C/text%3E%3C/svg%3E";
-main
-const authorPhoto = author?.photo ?? fallbackAvatar;
+const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const withBase = (path) => (path?.startsWith("/") ? `${baseUrl}${path.slice(1)}` : path);
+const authorPhoto = withBase(author?.photo) ?? fallbackAvatar;
 ---
 <BaseLayout title={frontmatter.title} description={frontmatter.excerpt}>
   <article class="post">
@@ -73,14 +76,15 @@ codex/fix-author-photo-issue-giovay
 
   .post-header h1 {
     font-size: clamp(2rem, 3vw, 2.8rem);
-    margin: 0;
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
   }
 
   .post-excerpt {
     font-size: 1.1rem;
     color: #4a3f35;
-    margin: 0;
-    font-family: "Iowan Old Style", "Palatino Linotype", "Palatino", "Book Antiqua", serif;
+    line-height: 1.4;
+    margin: 0.15rem 0 1.15rem;
   }
 
   .post-cover {

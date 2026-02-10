@@ -9,16 +9,19 @@ const sortedPosts = posts.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?? "Autor";
+const formatDate = (value) =>
+  new Date(value).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const heroImageUrl = `${baseUrl}images/perspectiva_crista_hero_final_wide.png`;
 ---
 <BaseLayout>
-  <section class="hero">
-    <p class="kicker">Editorial</p>
-    <h1>Perspectiva Cristã</h1>
-    <p class="subtitle">
-      Um espaço para leituras, fé e reflexão. Textos autorais com foco em propósito e
-      conteúdo profundo.
-    </p>
-  </section>
+  <section class="hero" style={`--hero-image: url("${heroImageUrl}")`} aria-hidden="true"></section>
 
   <section class="post-list">
     <h2 class="section-title">Últimos artigos</h2>
@@ -32,10 +35,10 @@ const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?
             {formatDateBR(post.data.date)} · {getAuthorName(post.data.authorId)}
           </p>
           <h3>
-            <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+            <a href={`${baseUrl}posts/${post.slug}/`}>{post.data.title}</a>
           </h3>
           <p class="post-card__excerpt">{post.data.excerpt}</p>
-          <a class="post-card__link" href={`/posts/${post.slug}/`}>
+          <a class="post-card__link" href={`${baseUrl}posts/${post.slug}/`}>
             Ler artigo →
           </a>
         </article>
@@ -46,26 +49,22 @@ const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?
 
 <style>
   .hero {
-    margin-bottom: 3rem;
+    height: 58vh;
+    min-height: 360px;
+    margin-bottom: 2.5rem;
+    background-image: var(--hero-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #e9e3dc;
   }
 
-  .kicker {
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.75rem;
-    color: #8a7d70;
-    margin-bottom: 0.5rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.4rem, 4vw, 3.2rem);
-    margin: 0 0 1rem;
-  }
-
-  .subtitle {
-    max-width: 560px;
-    color: #4a3f35;
-    font-size: 1.1rem;
+  @media (max-width: 768px) {
+    .hero {
+      height: 42vh;
+      min-height: 240px;
+      margin-bottom: 2rem;
+    }
   }
 
   .post-list {
@@ -75,6 +74,7 @@ const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?
 
   .section-title {
     font-size: 1.2rem;
+    line-height: 1.25;
     text-transform: uppercase;
     letter-spacing: 0.18em;
     color: #8a7d70;
@@ -126,8 +126,9 @@ const getAuthorName = (id) => authors.find((author) => author.id === id)?.name ?
   }
 
   .post-card h3 {
-    margin: 0;
+    margin: 0 0 0.2rem;
     font-size: 1.4rem;
+    line-height: 1.23;
   }
 
   .post-card__excerpt {
